@@ -28,8 +28,8 @@ wss.on('connection', async (ws: WebSocket) => {
     const result = typeof commandHandler === 'function'
       ? await commandHandler(rest, wsStream)
       : 'Command not found';
-    console.log(data);
-    console.log(result);
+    console.log('Command:', data);
+    console.log('Result:', result);
   });
 });
 
