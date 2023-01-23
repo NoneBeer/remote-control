@@ -32,8 +32,9 @@ export const mouseLeft = async (offset: number, ws: Duplex) => {
 };
 
 export const mousePosition = async (_: unknown, ws: Duplex) => {
-  const position = await mouse.getPosition();
-  const message = `mouse_position_${position.x}px,${position.y}px`;
+  const { x, y } = await mouse.getPosition();
+  const message = `mouse_position_${x}px,${y}px`;
   ws.write(message);
+  ws.write(`mouse_position ${x},${y}`);
   return message;
 };

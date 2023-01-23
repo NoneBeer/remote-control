@@ -8,16 +8,16 @@ export const drawCircle = async (radius: string | number, ws: Duplex) => {
   await mouse.pressButton(Button.LEFT);
   const points = [];
   for (let angle = 0; angle < 2 * Math.PI; angle += .1) {
-    let x = position.x + (+radius * Math.cos(angle));
-    let y = position.y + (+radius * Math.sin(angle));
+    const x = position.x + (+radius * Math.cos(angle));
+    const y = position.y + (+radius * Math.sin(angle));
     points.push({ x, y });
   }
-  points.push({ x: position.x + +radius, y: position.y })
+  points.push({ x: position.x + +radius, y: position.y });
   points.forEach(async point => {
     setTimeout(async () => {
-      const position = new Point(point.x, point.y);
-      await mouse.move(straightTo(position));
-    }, 100)
+      const pos = new Point(point.x, point.y);
+      await mouse.move(straightTo(pos));
+    }, 100);
   });
   mouse.releaseButton(Button.LEFT);
   const message = `draw_circle_${radius}px`;
@@ -45,5 +45,7 @@ export const drawSquare = async (side: string, ws: Duplex) => {
   await mouse.move(left(+side));
   await mouse.move(up(+side));
   mouse.releaseButton(Button.LEFT);
-  return `draw_square_${side}px`;
+  const message = `draw_square_${side}px`;
+  ws.write(message);
+  return message;
 };
